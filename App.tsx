@@ -1,10 +1,10 @@
 import { StyleSheet, SafeAreaView, Platform} from 'react-native';
-import Home from './src/views/Home';
+import Routes from './src/routes';
 
 export default function App() {
   return (
     <SafeAreaView style={[styles.container,{paddingTop: Platform.OS === 'android' && 60}]}>
-      <Home></Home>
+      <Routes />
     </SafeAreaView>
   );
 };

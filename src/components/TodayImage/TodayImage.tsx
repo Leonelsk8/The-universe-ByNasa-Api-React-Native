@@ -1,8 +1,18 @@
 import React, {FC} from 'react';
 import {View,Text,Image, StyleSheet, Button} from 'react-native';
-import {PostImage} from '../../types'
+import {PostImage, RootStackParams} from '../../types';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const TodayImage:FC<PostImage>  = ({date,title,url})=>{
+type PostImageNavigationProps = NativeStackNavigationProp<RootStackParams, 'Detail'>
+
+const TodayImage:FC<PostImage>  = ({date,title,url, explanation})=>{
+  const {navigate} = useNavigation<PostImageNavigationProps>();
+
+  const handleViewPress =()=>{
+    navigate('Detail', {title, date, url, explanation});
+  };
+
   return(
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -11,7 +21,7 @@ const TodayImage:FC<PostImage>  = ({date,title,url})=>{
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.date}>{date}</Text>
       <View style={styles.buttonContainer}>
-        <Button title='view' />
+        <Button title='View' onPress={handleViewPress} />
       </View>
     </View>
   )
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   buttonContainer:{
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   }
 });
 
