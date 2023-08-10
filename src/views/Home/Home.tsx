@@ -1,15 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import { View, StyleSheet} from 'react-native';
+import React, { useEffect, useState, useContext} from 'react';
+import { View, StyleSheet, Text} from 'react-native';
 import fetchApi from '../../utils/API/Api';
-import Header from '../../components/Header';
 import TodayImage from '../../components/TodayImage';
 import LastFiveDaysImages from '../../components/LastFiveDaysImages';
 import { PostImage } from '../../types';
 import {format, sub} from 'date-fns';
+import { DefaultCreateCache } from '../../utils/Cache/SavedCacheFavorites';
+import MyContext from '../../../MyContext';
 
 const Home = ()=>{
   const [todayImage, setTodayImage] = useState<PostImage>();
   const [lastFiveDaysImages, setLastFiveDaysImages] = useState<PostImage[]>([]);
+  const {routeHome} = useContext(MyContext);
+
+  useEffect(()=>{
+    DefaultCreateCache();
+  },[])
 
   useEffect(()=>{
     const loadTodayImage = async()=>{
@@ -25,7 +31,7 @@ const Home = ()=>{
     const loadLastDaysImages = async()=>{
       try {
         const date = new Date();
-        const todaysDates = format(date, 'yyyy-MM-dd');
+        const todaysDates = format(sub(date, {days: 1}), 'yyyy-MM-dd');
         const fiveDaysAgoDate = format(sub(date, {days: 5}),'yyyy-MM-dd');
 
         const lastFiveDaysImagesResponse = await fetchApi(`&start_date=${fiveDaysAgoDate}&end_date=${todaysDates}`);
@@ -42,8 +48,16 @@ const Home = ()=>{
 
   return(
     <View style={styles.container}>
-      <Header/>
-      <TodayImage {...todayImage}/>
+      <Text style={styles.title}>Imagen del Día</Text>
+      {
+        routeHome?(
+          <TodayImage {...todayImage}/>
+        ) : (
+          <View style={{
+            width: '100%',
+            height: '45%'}}></View>
+        )
+      }
       <LastFiveDaysImages postImages={lastFiveDaysImages}/>
     </View>
   );
@@ -52,8 +66,16 @@ const Home = ()=>{
 const styles = StyleSheet.create({
   container:{
     flex:1,
+    backgroundColor: '#f5f5f5',
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(7,26,93,255)'
+    paddingVertical: 16
+  },
+  title:{
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16
   }
 })
 

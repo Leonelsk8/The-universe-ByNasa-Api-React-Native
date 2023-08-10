@@ -6,9 +6,14 @@ export type PostImage ={
   service_version?: string;
   title?: string;
   url?: string;
+  render?: boolean;
+  routeHome?: boolean;
 };
 
 export type RootStackParams = {
-  Home: undefined;
+  Home: PostImage;
   Detail: PostImage;
+  Search: PostImage;
+  Favorites: PostImage;
+  ImageFullScreen: PostImage;
 }

@@ -4,11 +4,9 @@ import {Text, View, Image, StyleSheet} from 'react-native';
 const Header = () =>{
   return (
     <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <Text style={styles.title}>Explore</Text>
-      </View>
-      <View style={styles.rightContainer}>
+      <View style={styles.LogoContainer}>
         <Image source={require('../../../assets/Logos/NasaLogo.png')} style={styles.image}></Image>
+        <Text style={styles.title}>Nasa Dates</Text>
       </View>
     </View>
   );
@@ -16,24 +14,23 @@ const Header = () =>{
 
 const styles = StyleSheet.create({
   container:{
+    padding:16,
+    backgroundColor: '#4464b3'
+  },
+  LogoContainer:{
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  leftContainer:{
-    flex:1,
-    alignItems: 'flex-start',
-  },
-  rightContainer:{
-    flex:1,
-    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
   },
   title:{
-    fontSize: 20,
     color: '#fff',
+    fontSize: 20,
+    marginLeft: 6,
+    fontWeight: 'bold'
   },
   image:{
-    width: 60,
-    height: 60
+    width: 55,
+    height: 55
   }
 });
 

@@ -8,8 +8,8 @@ const LastFiveDaysImages: FC<{postImages?: PostImageType[]}> = (props)=>{
 
   return(
     <View style={styles.container}>
-      <Text style={styles.title}>Last 5 Days</Text>
-      <ScrollView style={styles.content}>
+      <Text style={styles.title}>Últimos 5 Días</Text>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
         {
           postImages?.map((postImage) =>(
             <PostImage key={`post-image-${postImage.title}`} {...postImage}/>
@@ -22,16 +22,18 @@ const LastFiveDaysImages: FC<{postImages?: PostImageType[]}> = (props)=>{
 
 const styles = StyleSheet.create({
   container:{
-    flex:1,
-    marginVertical: 8,
-  },
-  content:{
-    paddingHorizontal: 24,
+    flex:0.9,
+    marginTop: 40,
+    justifyContent: 'center'
   },
   title:{
-    color: '#fff',
-    fontSize: 16,
-    marginBottom: 18
+    color: 'black',
+    fontSize: 18,
+    marginBottom: 5
+  },
+  scrollViewContent:{
+    flexGrow: 1,
+    alignItems: 'center',
   }
 });
 
